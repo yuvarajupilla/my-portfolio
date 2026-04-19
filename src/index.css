@@ -31,6 +31,9 @@ section {
 /* Ensure proper z-index stacking */
 nav {
   z-index: 1000;
+    transition: all 0.4s ease-in-out;
+
+
 }
 
 /* Hero section should start from top */
