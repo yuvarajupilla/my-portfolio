@@ -17,8 +17,10 @@ function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-black pt-24">
-
+    <section 
+      id="home"
+      className="relative min-h-screen w-full overflow-hidden bg-black"
+    >
       {/* 🔥 Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-fixed"
@@ -38,10 +40,11 @@ function Hero() {
         }}
       />
 
-      {/* 🔷 MAIN CONTENT */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-16 flex flex-col justify-center min-h-screen">
-
-        <div className="flex flex-col md:grid md:grid-cols-3 w-full items-start md:items-center gap-10">
+      {/* 🔷 MAIN CONTENT - Added padding-top to account for fixed navbar */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-16 flex flex-col justify-center min-h-screen pt-20 md:pt-0">
+        
+        {/* Added mt-0 md:mt-0 to ensure proper alignment */}
+        <div className="flex flex-col md:grid md:grid-cols-3 w-full items-start md:items-center gap-10 mt-0">
 
           {/* 🔵 LEFT TEXT */}
           <div>
@@ -103,7 +106,7 @@ function Hero() {
 
         </div>
 
-        {/* 🔽 MOBILE ONLY EXTRA CONTENT (Previously bottom sections) */}
+        {/* 🔽 MOBILE ONLY EXTRA CONTENT */}
         <div className="md:hidden mt-10 space-y-8">
 
           {/* LEFT INFO */}
@@ -117,26 +120,41 @@ function Hero() {
           {/* SOCIAL LINKS */}
           <div className="flex flex-col gap-6 text-gray-300">
 
-            <div className="flex items-center gap-4">
+            <a 
+              href="https://github.com/yourusername" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 hover:text-violet-400 transition-colors"
+            >
               <div className="w-10 h-10 border border-gray-700 rounded-lg flex items-center justify-center">
                 <FaGithub />
               </div>
               <span>GitHub</span>
-            </div>
+            </a>
 
-            <div className="flex items-center gap-4">
+            <a 
+              href="https://dribbble.com/yourusername" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 hover:text-violet-400 transition-colors"
+            >
               <div className="w-10 h-10 border border-gray-700 rounded-lg flex items-center justify-center">
                 <FaDribbble />
               </div>
               <span>Dribbble</span>
-            </div>
+            </a>
 
-            <div className="flex items-center gap-4">
+            <a 
+              href="https://linkedin.com/in/yourusername" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 hover:text-violet-400 transition-colors"
+            >
               <div className="w-10 h-10 border border-gray-700 rounded-lg flex items-center justify-center">
                 <FaLinkedin />
               </div>
               <span>LinkedIn</span>
-            </div>
+            </a>
 
           </div>
 
@@ -144,7 +162,7 @@ function Hero() {
 
       </div>
 
-      {/* 🔻 DESKTOP BOTTOM LEFT (UNCHANGED) */}
+      {/* 🔻 DESKTOP BOTTOM LEFT */}
       <div className="hidden md:flex absolute bottom-10 left-6 md:left-16 items-start gap-4 text-gray-400 max-w-sm">
 
         <div className="w-[2px] h-12 bg-violet-500"></div>
@@ -155,23 +173,38 @@ function Hero() {
 
       </div>
 
-      {/* 🔻 DESKTOP BOTTOM RIGHT (UNCHANGED) */}
+      {/* 🔻 DESKTOP BOTTOM RIGHT */}
       <div className="hidden md:flex absolute bottom-10 right-6 md:right-16 gap-8 items-center text-gray-400">
 
-        <div className="flex items-center gap-2 hover:text-white cursor-pointer">
+        <a 
+          href="https://github.com/yourusername" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 hover:text-violet-400 transition-colors cursor-pointer"
+        >
           <FaGithub />
           <span>GitHub</span>
-        </div>
+        </a>
 
-        <div className="flex items-center gap-2 hover:text-white cursor-pointer">
+        <a 
+          href="https://dribbble.com/yourusername" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 hover:text-violet-400 transition-colors cursor-pointer"
+        >
           <FaDribbble />
           <span>Dribbble</span>
-        </div>
+        </a>
 
-        <div className="flex items-center gap-2 hover:text-white cursor-pointer">
+        <a 
+          href="https://linkedin.com/in/yourusername" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 hover:text-violet-400 transition-colors cursor-pointer"
+        >
           <FaLinkedin />
           <span>LinkedIn</span>
-        </div>
+        </a>
 
       </div>
 

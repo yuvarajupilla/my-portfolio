@@ -75,7 +75,7 @@ function Projects() {
     {
       title: "Portfolio Generator CMS",
       description: "Drag-and-drop portfolio builder with customizable templates, SEO optimization, and one-click deployment.",
-      image: "https://images.unsplash.com/photo-1545235617-7a424c1a60cb?auto=format&fit=crop&w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80",
       tech: [<FaReact />, <SiTypescript />, <FaNodeJs />, <SiMongodb />, <SiExpress />],
       techNames: ["React", "TypeScript", "Node.js", "MongoDB", "Express"],
       github: "https://github.com",

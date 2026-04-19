@@ -6,6 +6,7 @@
 
 html{
   scroll-behavior: smooth;
+  scroll-padding-top: 0;
 }
 
 body{
@@ -13,6 +14,42 @@ body{
   color: #ffffff;
   font-family: 'Inter', sans-serif;
 }
+
+/* ========== ADD THESE NEW STYLES ========== */
+
+/* Fix for navbar not blocking content */
+section {
+  scroll-margin-top: 80px;
+}
+
+/* Make sure hero section doesn't get covered */
+#home {
+  scroll-margin-top: 0;
+  min-height: 100vh;
+}
+
+/* Ensure proper z-index stacking */
+nav {
+  z-index: 1000;
+}
+
+/* Hero section should start from top */
+.hero-section {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Fix for mobile menu when open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Smooth transition for navbar */
+.navbar-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* ========== EXISTING STYLES BELOW ========== */
 
 @keyframes fadeUp {
   from {
@@ -255,6 +292,29 @@ body{
 
 .code-flow-horizontal-reverse {
   animation: floatCodeReverse 18s linear infinite;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile menu item animations */
+.menu-item {
+  transform: translateX(20px);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+}
+
+.menu-item.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Navbar background blur */
+.navbar-blur {
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 ::-webkit-scrollbar { width: 6px; }
