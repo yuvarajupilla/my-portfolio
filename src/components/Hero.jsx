@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FaGithub, FaLinkedin, FaDribbble } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaGithub, FaLinkedin, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import herobg from "../assets/herobg.png";
 
 function Hero() {
@@ -8,7 +9,7 @@ function Hero() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const newOpacity = Math.min(0.7, 0.3 + scrollY / 500);
+      const newOpacity = Math.min(0.7, 0.3 + scrollY / 600);
       setOpacity(newOpacity);
     };
 
@@ -16,20 +17,32 @@ function Hero() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Smooth animation
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
   return (
-    <section 
+    <motion.section
       id="home"
-      className="relative min-h-screen w-full overflow-hidden bg-black"
+      initial="hidden"
+      animate="visible"
+      className="relative min-h-screen w-full overflow-hidden bg-black pb-20 md:pb-0"
     >
-      {/* 🔥 Background */}
+      {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-fixed"
         style={{ backgroundImage: `url(${herobg})` }}
       />
 
-      {/* 🔥 Overlay */}
+      {/* Overlay */}
       <div
-        className="absolute inset-0 transition-all duration-300"
+        className="absolute inset-0"
         style={{
           background: `linear-gradient(
             to right,
@@ -40,178 +53,104 @@ function Hero() {
         }}
       />
 
-      {/* 🔷 MAIN CONTENT - Added padding-top to account for fixed navbar */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-16 flex flex-col justify-center min-h-screen pt-20 md:pt-0">
-        
-        {/* Added mt-0 md:mt-0 to ensure proper alignment */}
-        <div className="flex flex-col md:grid md:grid-cols-3 w-full items-start md:items-center gap-10 mt-0">
+      {/* CONTENT */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-16 flex items-center min-h-screen pt-20">
 
-          {/* 🔵 LEFT TEXT */}
+        <div className="grid md:grid-cols-3 gap-10 w-full items-center">
+
+          {/* LEFT TEXT */}
           <div>
-            <h1 className="text-[42px] sm:text-[60px] md:text-[130px] font-bold leading-none text-white">
+            <motion.h1 variants={fadeUp} className="text-[48px] sm:text-[70px] md:text-[120px] font-bold text-white leading-none">
               Build
-            </h1>
+            </motion.h1>
 
-            <h1 className="text-[42px] sm:text-[60px] md:text-[130px] font-bold leading-none stroke-text">
+            <motion.h1
+              variants={fadeUp}
+              className="text-[48px] sm:text-[70px] md:text-[120px] font-bold leading-none bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text text-transparent"
+            >
               Digital
-            </h1>
+            </motion.h1>
 
-            <h1 className="text-[42px] sm:text-[60px] md:text-[130px] font-bold leading-none text-white">
+            <motion.h1 variants={fadeUp} className="text-[48px] sm:text-[70px] md:text-[120px] font-bold text-white leading-none">
               Futures
-            </h1>
+            </motion.h1>
           </div>
 
           {/* CENTER SPACE */}
           <div className="hidden md:block"></div>
 
-          {/* 🔴 RIGHT CONTENT */}
-          <div className="w-full md:w-auto">
-
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold text-white mb-6 leading-tight">
+          {/* RIGHT CONTENT */}
+          <div>
+            <motion.h2
+              variants={fadeUp}
+              className="text-2xl sm:text-3xl md:text-5xl font-semibold text-white mb-6"
+            >
               Innovate. Develop. <br />
               Succeed. Fast.
-            </h2>
+            </motion.h2>
 
-            <p className="text-gray-400 max-w-full md:max-w-md mb-8 leading-relaxed">
+            <motion.p
+              variants={fadeUp}
+              className="text-gray-400 mb-8 max-w-md"
+            >
               I'm a Full Stack Developer focused on building scalable,
               high-performance web applications using modern technologies.
-            </p>
+            </motion.p>
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
-
+            {/* BUTTONS */}
+            <motion.div variants={fadeUp} className="flex gap-4 mb-8">
               <a
                 href="#projects"
-                className="px-6 py-3 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition text-center"
+                className="px-6 py-3 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition-all duration-300 hover:scale-105"
               >
                 Get Started
               </a>
 
               <a
                 href="#contact"
-                className="px-6 py-3 border border-violet-500 text-violet-500 rounded-full hover:bg-violet-500 hover:text-white transition text-center"
+                className="px-6 py-3 border border-violet-500 text-violet-400 rounded-full hover:bg-violet-500 hover:text-white transition-all duration-300 hover:scale-105"
               >
                 My Work
               </a>
-
-            </div>
+            </motion.div>
 
             {/* NAME */}
-            <div className="flex items-center gap-2 text-gray-400 text-sm mb-10 md:mb-0">
-              <span className="w-2 h-2 bg-violet-500 rounded-full"></span>
-              <p>Yuvaraju — Full Stack Developer</p>
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* 🔽 MOBILE ONLY EXTRA CONTENT */}
-        <div className="md:hidden mt-10 space-y-8">
-
-          {/* LEFT INFO */}
-          <div className="flex items-start gap-4 text-gray-400">
-            <div className="w-[2px] h-12 bg-violet-500"></div>
-            <p>
-              Passionate about building scalable and modern web applications.
-            </p>
-          </div>
-
-          {/* SOCIAL LINKS */}
-          <div className="flex flex-col gap-6 text-gray-300">
-
-            <a 
-              href="https://github.com/yourusername" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 hover:text-violet-400 transition-colors"
+            <motion.div
+              variants={fadeUp}
+              className="flex items-center gap-2 text-gray-400 text-sm mb-6"
             >
-              <div className="w-10 h-10 border border-gray-700 rounded-lg flex items-center justify-center">
+              <span className="w-2 h-2 bg-violet-500 rounded-full animate-pulse"></span>
+              Yuvaraju — Full Stack Developer
+            </motion.div>
+
+            {/* SOCIAL */}
+            <motion.div variants={fadeUp} className="flex gap-6 text-gray-400 text-xl">
+
+              <a href="https://github.com/yuvarajupilla" target="_blank" rel="noopener noreferrer" className="hover:text-violet-400 transition hover:scale-110">
                 <FaGithub />
-              </div>
-              <span>GitHub</span>
-            </a>
+              </a>
 
-            <a 
-              href="https://dribbble.com/yourusername" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 hover:text-violet-400 transition-colors"
-            >
-              <div className="w-10 h-10 border border-gray-700 rounded-lg flex items-center justify-center">
-                <FaDribbble />
-              </div>
-              <span>Dribbble</span>
-            </a>
-
-            <a 
-              href="https://linkedin.com/in/yourusername" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 hover:text-violet-400 transition-colors"
-            >
-              <div className="w-10 h-10 border border-gray-700 rounded-lg flex items-center justify-center">
+              <a href="https://www.linkedin.com/in/yuvarajupilla/" target="_blank" rel="noopener noreferrer" className="hover:text-violet-400 transition hover:scale-110">
                 <FaLinkedin />
-              </div>
-              <span>LinkedIn</span>
-            </a>
+              </a>
 
+              <a href="https://www.instagram.com/yuvaraju___p" target="_blank" rel="noopener noreferrer" className="hover:text-violet-400 transition hover:scale-110">
+                <FaInstagram />
+              </a>
+
+              <a href="https://wa.me/919885988059" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition hover:scale-110">
+                <FaWhatsapp />
+              </a>
+
+            </motion.div>
           </div>
 
         </div>
-
       </div>
 
-      {/* 🔻 DESKTOP BOTTOM LEFT */}
-      <div className="hidden md:flex absolute bottom-10 left-6 md:left-16 items-start gap-4 text-gray-400 max-w-sm">
-
-        <div className="w-[2px] h-12 bg-violet-500"></div>
-
-        <p>
-          Passionate about building scalable and modern web applications.
-        </p>
-
-      </div>
-
-      {/* 🔻 DESKTOP BOTTOM RIGHT */}
-      <div className="hidden md:flex absolute bottom-10 right-6 md:right-16 gap-8 items-center text-gray-400">
-
-        <a 
-          href="https://github.com/yourusername" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 hover:text-violet-400 transition-colors cursor-pointer"
-        >
-          <FaGithub />
-          <span>GitHub</span>
-        </a>
-
-        <a 
-          href="https://dribbble.com/yourusername" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 hover:text-violet-400 transition-colors cursor-pointer"
-        >
-          <FaDribbble />
-          <span>Dribbble</span>
-        </a>
-
-        <a 
-          href="https://linkedin.com/in/yourusername" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 hover:text-violet-400 transition-colors cursor-pointer"
-        >
-          <FaLinkedin />
-          <span>LinkedIn</span>
-        </a>
-
-      </div>
-
-      {/* 🔥 Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-black pointer-events-none" />
-
-    </section>
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-black" />
+    </motion.section>
   );
 }
 

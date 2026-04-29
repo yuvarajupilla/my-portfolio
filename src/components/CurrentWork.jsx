@@ -2,15 +2,11 @@ import { motion } from "framer-motion";
 import { 
   FaMapMarkerAlt, 
   FaBriefcase, 
-  FaArrowRight, 
-  FaCheckCircle, 
-  FaCalendarAlt,
-  FaCode,
-  FaUsers,
+  FaCode, 
+  FaUsers, 
   FaClock,
-  FaAward,
-  FaTerminal,
-  FaLaptopCode
+  FaArrowRight,
+  FaCalendarAlt
 } from "react-icons/fa";
 import { 
   SiReact, 
@@ -19,10 +15,13 @@ import {
   SiTailwindcss, 
   SiDocker, 
   SiWordpress,
-  SiJavascript
+  SiExpress
 } from "react-icons/si";
+import { useTheme } from "../context/ThemeContext";
 
 function CurrentWork() {
+  const { darkMode } = useTheme();
+
   const currentRole = {
     company: "AVIES",
     position: "Full Stack Developer",
@@ -40,321 +39,372 @@ function CurrentWork() {
     techStack: [
       { name: "React.js", icon: <SiReact />, color: "#61DBFB" },
       { name: "Node.js", icon: <SiNodedotjs />, color: "#68A063" },
+      { name: "Express", icon: <SiExpress />, color: "#ffffff" },
       { name: "MongoDB", icon: <SiMongodb />, color: "#4DB33D" },
       { name: "Tailwind", icon: <SiTailwindcss />, color: "#06B6D4" },
       { name: "Docker", icon: <SiDocker />, color: "#2496ED" },
       { name: "WordPress", icon: <SiWordpress />, color: "#21759B" }
-    ],
-    stats: [
-      { value: "10+", label: "Projects", icon: <FaCode /> },
-      { value: "98%", label: "Success Rate", icon: <FaUsers /> },
-      { value: "500+", label: "Commits", icon: <FaTerminal /> }
     ]
   };
 
-  // Horizontal floating code lines
+  // Code lines for background animation (matching Services component style)
   const codeLines = [
-    "const developer = { passion: 'coding', stack: 'MERN' };",
-    "npm run build && docker compose up",
-    "function buildApp() { return 'production-ready'; }",
-    "git commit -m 'feat: add awesome feature'",
-    "<React.StrictMode><App /></React.StrictMode>",
-    "app.get('/api', (req, res) => res.json(data))",
-    "db.collection('projects').find({ status: 'active' })",
-    "await Promise.all([api1, api2, api3])",
-    "const optimizePerformance = () => 'fast'",
-    "docker build -t portfolio . && docker run -p 3000:3000"
+    "const developer = {",
+    "  role: 'Full Stack',",
+    "  company: 'AVIES',",
+    "  stack: 'MERN'",
+    "}",
+    "npm run build",
+    "git commit -m 'feat'",
+    "app.listen(3000)",
+    "db.connect()",
+    "// Building products",
+    "export default CurrentWork",
   ];
 
   return (
-    <section className="relative bg-[#0A0A0F] py-24 px-4 md:px-8 overflow-hidden font-mono">
-      {/* Dark grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,213,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,213,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
-      
-      {/* Horizontal floating code animations */}
-      {codeLines.map((code, idx) => (
-        <div
-          key={idx}
-          className={`code-flow-horizontal absolute whitespace-nowrap text-[10px] md:text-xs font-mono text-cyan-400/30 pointer-events-none`}
-          style={{
-            top: `${(idx % 8) * 12 + 5}%`,
-            left: '-100%',
-            animation: `floatCode ${15 + idx * 2}s linear infinite`,
-            animationDelay: `${idx * 1.5}s`,
-            opacity: 0.2 + (idx % 3) * 0.1
-          }}
-        >
-          <span className="text-cyan-400">➜</span> {code}
-        </div>
-      ))}
-
-      {/* Additional reverse flowing code */}
-      {codeLines.slice(0, 5).map((code, idx) => (
-        <div
-          key={`reverse-${idx}`}
-          className={`code-flow-horizontal-reverse absolute whitespace-nowrap text-[10px] md:text-xs font-mono text-violet-400/30 pointer-events-none`}
-          style={{
-            top: `${(idx % 6) * 15 + 55}%`,
-            right: '-100%',
-            animation: `floatCodeReverse ${18 + idx * 2}s linear infinite`,
-            animationDelay: `${idx * 2}s`,
-            opacity: 0.15
-          }}
-        >
-          {code} <span className="text-violet-400">➜</span>
-        </div>
-      ))}
-
-      <div className="relative max-w-6xl mx-auto z-10">
-        {/* Terminal-style header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-black/50 border border-cyan-500/30 backdrop-blur-sm mb-6 font-mono">
-            <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-              <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-            </div>
-            <span className="text-xs text-cyan-400">developer@avies:~$</span>
-            <span className="text-xs text-gray-400">cat current-position</span>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-mono">
-            <span className="text-cyan-400">$</span> 
-            <span className="text-white"> whereami</span>
-            <span className="text-cyan-400 animate-pulse">_</span>
-          </h2>
-          <p className="text-gray-400 font-mono text-sm mt-3">➜ Full Stack Developer @ AVIES</p>
-        </motion.div>
-
-        {/* Main content grid */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* LEFT COLUMN - Company & Responsibilities */}
-          <div className="space-y-5">
-            {/* Company Card - Terminal Style */}
+    <section className={`relative overflow-hidden transition-colors duration-300 ${
+      darkMode ? "bg-[#0A0A0F] text-white" : "bg-gray-50 text-gray-900"
+    } py-24 md:py-32 px-6 md:px-16`}>
+      {/* Animated Code Flow Background - Matching Services component */}
+      <div className={`absolute inset-0 overflow-hidden pointer-events-none ${
+        darkMode ? "opacity-[0.03]" : "opacity-[0.01]"
+      }`}>
+        <div className="absolute top-0 left-0 w-full h-full">
+          {[...Array(3)].map((_, columnIndex) => (
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              key={columnIndex}
+              className="absolute whitespace-nowrap font-mono text-sm"
+              style={{
+                left: `${columnIndex * 35}%`,
+                top: -100,
+              }}
+              animate={{
+                y: ["0%", "100%"],
+              }}
+              transition={{
+                duration: 40 + columnIndex * 15,
+                repeat: Infinity,
+                ease: "linear",
+                delay: columnIndex * 5,
+              }}
+            >
+              {codeLines.map((line, lineIndex) => (
+                <div
+                  key={lineIndex}
+                  className={`py-1 ${darkMode ? "text-gray-400" : "text-gray-600"}`}
+                  style={{
+                    opacity: 0.3 + Math.random() * 0.3,
+                  }}
+                >
+                  {line}
+                </div>
+              ))}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Horizontal Scrolling Code Bar - Top */}
+      <div className={`absolute top-0 left-0 w-full h-8 backdrop-blur-sm border-b overflow-hidden pointer-events-none transition-colors duration-300 ${
+        darkMode 
+          ? "bg-black/50 border-cyan-500/20" 
+          : "bg-white/50 border-cyan-300/30"
+      }`}>
+        <motion.div
+          className={`whitespace-nowrap font-mono text-xs py-1.5 ${
+            darkMode ? "text-cyan-400/40" : "text-cyan-500/40"
+          }`}
+          animate={{
+            x: ["0%", "-50%"],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        >
+          {[...Array(3)].map((_, i) => (
+            <span key={i} className="mx-4">
+              {codeLines.map((line, idx) => (
+                <span key={idx} className="mx-2">
+                  {line} <span className={darkMode ? "text-cyan-600" : "text-cyan-300"}>//</span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Bottom Scrolling Code Bar */}
+      <div className={`absolute bottom-0 left-0 w-full h-8 backdrop-blur-sm border-t overflow-hidden pointer-events-none transition-colors duration-300 ${
+        darkMode 
+          ? "bg-black/50 border-cyan-500/20" 
+          : "bg-white/50 border-cyan-300/30"
+      }`}>
+        <motion.div
+          className={`whitespace-nowrap font-mono text-xs py-1.5 ${
+            darkMode ? "text-violet-400/40" : "text-violet-500/40"
+          }`}
+          animate={{
+            x: ["-50%", "0%"],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        >
+          {[...Array(3)].map((_, i) => (
+            <span key={i} className="mx-4">
+              {codeLines.map((line, idx) => (
+                <span key={idx} className="mx-2">
+                  &gt; {line}
+                </span>
+              ))}
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Background Glow */}
+      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full transition-opacity duration-300 ${
+        darkMode ? "bg-cyan-600/5 blur-[180px]" : "bg-cyan-400/10 blur-[180px]"
+      }`} />
+
+      <div className="relative max-w-7xl mx-auto z-10">
+        {/* Header - Matching Services style */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-20">
+          <div className="max-w-3xl">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-black/40 border border-cyan-500/20 rounded-lg p-5 hover:border-cyan-500/40 transition-all duration-300"
+              className={`uppercase tracking-[0.3em] text-sm mb-5 font-mono ${
+                darkMode ? "text-cyan-400" : "text-cyan-600"
+              }`}
             >
-              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-cyan-500/20">
-                <FaTerminal className="text-cyan-400 text-xl" />
-                <span className="text-cyan-400 font-mono text-sm">./company-info</span>
-              </div>
-              
-              <div className="space-y-2 font-mono text-sm">
-                <div className="flex items-start gap-2">
-                  <span className="text-cyan-400">name:</span>
-                  <span className="text-white font-bold">{currentRole.company}</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-cyan-400">role:</span>
-                  <span className="text-gray-300">{currentRole.position}</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-cyan-400">location:</span>
-                  <span className="text-gray-300">{currentRole.location}</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-cyan-400">since:</span>
-                  <span className="text-gray-300">{currentRole.startDate} → {currentRole.duration}</span>
-                </div>
-                <div className="flex items-start gap-2 pt-2 border-t border-cyan-500/20 mt-2">
-                  <span className="text-cyan-400">bio:</span>
-                  <span className="text-gray-400 text-xs leading-relaxed">{currentRole.description}</span>
-                </div>
-              </div>
-            </motion.div>
+              &lt; Current Role /&gt;
+            </motion.p>
 
-            {/* Responsibilities - Code Comments Style */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+            <motion.h2
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
               viewport={{ once: true }}
-              className="bg-black/40 border border-violet-500/20 rounded-lg p-5"
+              className="text-5xl sm:text-6xl lg:text-7xl font-black leading-none"
             >
-              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-violet-500/20">
-                <FaCode className="text-violet-400 text-xl" />
-                <span className="text-violet-400 font-mono text-sm">// key-responsibilities.ts</span>
-              </div>
-              <ul className="space-y-2 font-mono text-xs">
-                {currentRole.responsibilities.map((item, idx) => (
-                  <motion.li
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: idx * 0.05 }}
-                    viewport={{ once: true }}
-                    className="flex items-start gap-2 text-gray-300 hover:text-cyan-400 transition-colors"
-                  >
-                    <span className="text-cyan-400">→</span>
-                    <span>{item}</span>
-                    <span className="text-gray-600 text-[10px] ml-auto">✓</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+              Working At
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-violet-400 to-purple-400 mt-2">
+                {currentRole.company}
+              </span>
+            </motion.h2>
           </div>
 
-          {/* RIGHT COLUMN - Tech Stack & Achievements */}
-          <div className="space-y-5">
-            {/* Tech Stack - Matrix Style */}
+          <motion.a
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            href="#contact"
+            className={`group inline-flex items-center gap-3 self-start lg:self-auto px-7 py-4 rounded-2xl border transition-all duration-300 font-mono ${
+              darkMode
+                ? "border-cyan-500/40 bg-white/5 backdrop-blur-xl hover:bg-cyan-500 hover:border-cyan-500"
+                : "border-cyan-400/40 bg-gray-100/80 backdrop-blur-xl hover:bg-cyan-500 hover:border-cyan-500 hover:text-white"
+            }`}
+          >
+            <span className="font-medium">Let's Collaborate</span>
+            <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+          </motion.a>
+        </div>
+
+        {/* Main Content */}
+        <div className="grid lg:grid-cols-2 gap-10">
+          {/* Left Column - Company Info & Responsibilities */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className={`relative rounded-3xl overflow-hidden border p-8 transition-all duration-500 ${
+              darkMode
+                ? "border-white/10 bg-black/40 backdrop-blur-xl hover:border-cyan-500/30"
+                : "border-gray-200 bg-white/80 backdrop-blur-xl hover:border-cyan-400/50 shadow-sm"
+            }`}
+          >
+            <div className="relative z-10">
+              {/* Role Badge */}
+              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 ${
+                darkMode
+                  ? "bg-cyan-500/10 border-cyan-500/20"
+                  : "bg-cyan-100 border-cyan-200"
+              }`}>
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className={`text-xs font-mono ${darkMode ? "text-cyan-400" : "text-cyan-700"}`}>ACTIVE ROLE</span>
+              </div>
+
+              {/* Position */}
+              <h3 className="text-2xl font-bold mb-2">{currentRole.position}</h3>
+              
+              {/* Details */}
+              <div className={`space-y-3 mb-6 pb-6 border-b ${
+                darkMode ? "border-white/10" : "border-gray-200"
+              }`}>
+                <div className={`flex items-center gap-3 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+                  <FaBriefcase className="text-cyan-400" />
+                  <span>{currentRole.company}</span>
+                </div>
+                <div className={`flex items-center gap-3 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+                  <FaMapMarkerAlt className="text-cyan-400" />
+                  <span>{currentRole.location}</span>
+                </div>
+                <div className={`flex items-center gap-3 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+                  <FaCalendarAlt className="text-cyan-400" />
+                  <span>{currentRole.startDate} - {currentRole.duration}</span>
+                </div>
+              </div>
+
+              {/* Description */}
+              <p className={`leading-relaxed mb-6 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+                {currentRole.description}
+              </p>
+
+              {/* Responsibilities */}
+              <div className="space-y-3">
+                <h4 className={`text-sm font-semibold font-mono ${darkMode ? "text-cyan-400" : "text-cyan-700"}`}>// key-responsibilities</h4>
+                <ul className="space-y-2">
+                  {currentRole.responsibilities.map((item, idx) => (
+                    <motion.li
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: idx * 0.05 }}
+                      className={`flex items-start gap-2 text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+                    >
+                      <span className="text-cyan-400 mt-0.5">▹</span>
+                      <span>{item}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column - Tech Stack & Stats */}
+          <div className="space-y-6">
+            {/* Tech Stack Card */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="bg-black/40 border border-cyan-500/20 rounded-lg p-5"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className={`relative rounded-3xl overflow-hidden border p-8 transition-all duration-500 ${
+                darkMode
+                  ? "border-white/10 bg-black/40 backdrop-blur-xl hover:border-cyan-500/30"
+                  : "border-gray-200 bg-white/80 backdrop-blur-xl hover:border-cyan-400/50 shadow-sm"
+              }`}
             >
-              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-cyan-500/20">
-                <FaLaptopCode className="text-cyan-400 text-xl" />
-                <span className="text-cyan-400 font-mono text-sm">$ tech --stack</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
+              <h3 className="text-xl font-bold mb-5 flex items-center gap-2">
+                <FaCode className="text-cyan-400" />
+                Tech Stack
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
                 {currentRole.techStack.map((tech, idx) => (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    whileHover={{ scale: 1.02, x: 3 }}
+                    whileHover={{ scale: 1.02, x: 2 }}
                     transition={{ duration: 0.2, delay: idx * 0.03 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-2 p-2 rounded bg-cyan-500/5 border border-cyan-500/20 hover:border-cyan-500/50 transition-all"
+                    className={`flex items-center gap-3 p-3 rounded-xl transition-all ${
+                      darkMode
+                        ? "bg-white/5 border border-white/10 hover:border-cyan-500/30"
+                        : "bg-gray-100 border border-gray-200 hover:border-cyan-400/50"
+                    }`}
                   >
-                    <div className="text-lg" style={{ color: tech.color }}>{tech.icon}</div>
-                    <span className="text-xs text-gray-300 font-mono">{tech.name}</span>
+                    <div className="text-xl" style={{ color: tech.color }}>{tech.icon}</div>
+                    <span className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-700"}`}>{tech.name}</span>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Stats Dashboard */}
+            {/* Stats Card */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="bg-black/40 border border-fuchsia-500/20 rounded-lg p-5"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className={`relative rounded-3xl overflow-hidden border p-8 transition-all duration-500 ${
+                darkMode
+                  ? "border-white/10 bg-black/40 backdrop-blur-xl hover:border-cyan-500/30"
+                  : "border-gray-200 bg-white/80 backdrop-blur-xl hover:border-cyan-400/50 shadow-sm"
+              }`}
             >
-              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-fuchsia-500/20">
-                <FaTerminal className="text-fuchsia-400 text-xl" />
-                <span className="text-fuchsia-400 font-mono text-sm">$ stats --dashboard</span>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                {currentRole.stats.map((stat, idx) => (
-                  <div key={idx} className="text-center p-2 rounded bg-white/5">
-                    <div className="text-cyan-400 text-lg mb-1">{stat.icon}</div>
-                    <div className="text-white font-bold font-mono">{stat.value}</div>
-                    <div className="text-gray-500 text-[10px] font-mono">{stat.label}</div>
-                  </div>
-                ))}
+              <h3 className="text-xl font-bold mb-5 flex items-center gap-2">
+                <FaUsers className="text-cyan-400" />
+                Impact
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className={`rounded-2xl border p-4 text-center transition-all ${
+                  darkMode
+                    ? "bg-white/5 border-white/10 hover:bg-cyan-500/10"
+                    : "bg-gray-100 border-gray-200 hover:bg-cyan-50"
+                }`}>
+                  <div className="text-3xl font-bold text-cyan-400 mb-1">10+</div>
+                  <div className={`text-xs font-mono ${darkMode ? "text-gray-400" : "text-gray-500"}`}>Projects</div>
+                </div>
+                <div className={`rounded-2xl border p-4 text-center transition-all ${
+                  darkMode
+                    ? "bg-white/5 border-white/10 hover:bg-cyan-500/10"
+                    : "bg-gray-100 border-gray-200 hover:bg-cyan-50"
+                }`}>
+                  <div className="text-3xl font-bold text-cyan-400 mb-1">98%</div>
+                  <div className={`text-xs font-mono ${darkMode ? "text-gray-400" : "text-gray-500"}`}>Success Rate</div>
+                </div>
+                <div className={`rounded-2xl border p-4 text-center transition-all ${
+                  darkMode
+                    ? "bg-white/5 border-white/10 hover:bg-cyan-500/10"
+                    : "bg-gray-100 border-gray-200 hover:bg-cyan-50"
+                }`}>
+                  <div className="text-3xl font-bold text-cyan-400 mb-1">35%</div>
+                  <div className={`text-xs font-mono ${darkMode ? "text-gray-400" : "text-gray-500"}`}>Performance+</div>
+                </div>
+                <div className={`rounded-2xl border p-4 text-center transition-all ${
+                  darkMode
+                    ? "bg-white/5 border-white/10 hover:bg-cyan-500/10"
+                    : "bg-gray-100 border-gray-200 hover:bg-cyan-50"
+                }`}>
+                  <div className="text-3xl font-bold text-cyan-400 mb-1">24/7</div>
+                  <div className={`text-xs font-mono ${darkMode ? "text-gray-400" : "text-gray-500"}`}>Support</div>
+                </div>
               </div>
             </motion.div>
 
-            {/* Achievement */}
+            {/* Availability Badge */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="bg-black/40 border border-emerald-500/20 rounded-lg p-5"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className={`relative rounded-3xl overflow-hidden border p-6 transition-colors duration-300 ${
+                darkMode
+                  ? "border-white/10 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-xl"
+                  : "border-gray-200 bg-gradient-to-r from-cyan-100 to-purple-100 backdrop-blur-xl"
+              }`}
             >
-              <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs">
-                <FaAward />
-                <span>achievements.log</span>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className={`text-sm font-mono mb-1 ${darkMode ? "text-cyan-400" : "text-cyan-700"}`}>$&gt; status</div>
+                  <div className={`font-semibold ${darkMode ? "text-white" : "text-gray-800"}`}>Available for opportunities</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className={`text-xs font-mono ${darkMode ? "text-green-400" : "text-green-700"}`}>Open</span>
+                </div>
               </div>
-              <p className="text-gray-400 text-xs font-mono mt-2">
-                ✓ 10+ production apps deployed<br/>
-                ✓ 8+ WordPress solutions delivered<br/>
-                ✓ 35% avg performance improvement
-              </p>
             </motion.div>
           </div>
         </div>
-
-        {/* CTA - Command Line Style */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="mt-10 text-center"
-        >
-          <div className="inline-block bg-black/60 border border-cyan-500/30 rounded-lg p-1">
-            <div className="flex items-center gap-2 px-4 py-2">
-              <span className="text-cyan-400 font-mono text-sm">$</span>
-              <input 
-                type="text" 
-                value="npm run collaborate --with=avies" 
-                readOnly 
-                className="bg-transparent text-white font-mono text-sm outline-none cursor-default"
-              />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-4 py-1 bg-gradient-to-r from-cyan-500 to-violet-500 rounded-md text-white font-mono text-sm font-semibold"
-              >
-                Execute →
-              </motion.button>
-            </div>
-          </div>
-          <p className="text-gray-500 font-mono text-xs mt-4">
-            ➜ Ready for new challenges • Open for freelance & full-time
-          </p>
-        </motion.div>
       </div>
-
-      {/* Add keyframes to global CSS or use style tag */}
-      <style>{`
-        @keyframes floatCode {
-          0% {
-            left: -100%;
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.3;
-          }
-          90% {
-            opacity: 0.3;
-          }
-          100% {
-            left: 100%;
-            opacity: 0;
-          }
-        }
-        
-        @keyframes floatCodeReverse {
-          0% {
-            right: -100%;
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.2;
-          }
-          90% {
-            opacity: 0.2;
-          }
-          100% {
-            right: 100%;
-            opacity: 0;
-          }
-        }
-        
-        .code-flow-horizontal {
-          animation: floatCode 15s linear infinite;
-        }
-        
-        .code-flow-horizontal-reverse {
-          animation: floatCodeReverse 18s linear infinite;
-        }
-      `}</style>
     </section>
   );
 }

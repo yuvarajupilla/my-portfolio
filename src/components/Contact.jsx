@@ -4,15 +4,22 @@ import {
   FaEnvelope, 
   FaGithub, 
   FaLinkedin, 
-  FaTwitter, 
+  FaInstagram,   // ✅ add here
   FaUser,
   FaPaperPlane,
   FaCheckCircle,
-  FaArrowRight
+  FaArrowRight,
+  FaMapMarkerAlt,
+  FaClock,
+  FaBriefcase
 } from "react-icons/fa";
+
+
 import { SiLeetcode } from "react-icons/si";
+import { useTheme } from "../context/ThemeContext";
 
 function Contact() {
+  const { darkMode } = useTheme();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,11 +28,39 @@ function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  const socialLinks = [
-    { icon: <FaGithub />, url: "https://github.com/yourusername", label: "GitHub", color: "hover:text-gray-400" },
-    { icon: <FaLinkedin />, url: "https://linkedin.com/in/yourusername", label: "LinkedIn", color: "hover:text-blue-400" },
-    { icon: <FaTwitter />, url: "https://twitter.com/yourusername", label: "Twitter", color: "hover:text-blue-300" },
-    { icon: <SiLeetcode />, url: "https://leetcode.com/yourusername", label: "LeetCode", color: "hover:text-yellow-400" }
+
+
+const socialLinks = [
+  { 
+    icon: <FaGithub />, 
+    url: "https://github.com/yuvarajupilla", 
+    label: "GitHub", 
+    color: "#333" 
+  },
+  { 
+    icon: <FaLinkedin />, 
+    url: "https://www.linkedin.com/in/yuvarajupilla/", 
+    label: "LinkedIn", 
+    color: "#0077B5" 
+  },
+  { 
+    icon: <FaInstagram />, 
+    url: "https://www.instagram.com/yuvaraju___p", 
+    label: "Instagram", 
+    color: "#E1306C" 
+  },
+  { 
+    icon: <SiLeetcode />, 
+    url: "https://leetcode.com/u/yuvadeveloper112002/", 
+    label: "LeetCode", 
+    color: "#FFA116" 
+  }
+];
+
+  const infoCards = [
+    { icon: <FaMapMarkerAlt />, label: "Location", value: "Vijayawada, India" },
+    { icon: <FaClock />, label: "Response Time", value: "< 24 hours" },
+    { icon: <FaBriefcase />, label: "Available For", value: "Freelance & Full-Time" }
   ];
 
   const handleChange = (e) => {
@@ -39,7 +74,6 @@ function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
     setTimeout(() => {
       setSubmitStatus("success");
       setIsSubmitting(false);
@@ -49,9 +83,13 @@ function Contact() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#0A0A0F] text-white py-24 md:py-32 px-6 md:px-16">
-      {/* Animated Code Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.02]">
+    <section className={`relative overflow-hidden transition-colors duration-300 ${
+      darkMode ? "bg-[#0A0A0F] text-white" : "bg-gray-50 text-gray-900"
+    } py-24 px-6 md:px-16`}>
+      {/* Background Animation */}
+      <div className={`absolute inset-0 overflow-hidden pointer-events-none ${
+        darkMode ? "opacity-[0.02]" : "opacity-[0.01]"
+      }`}>
         <div className="absolute inset-0 font-mono text-xs">
           {[...Array(3)].map((_, i) => (
             <motion.div
@@ -71,7 +109,7 @@ function Contact() {
               }}
             >
               {[...Array(20)].map((_, j) => (
-                <div key={j} className="py-1">
+                <div key={j} className={`py-1 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
                   {`> contact.send("message_${j}", { status: "pending" });`}
                 </div>
               ))}
@@ -80,18 +118,22 @@ function Contact() {
         </div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-500/20 mb-6"
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 ${
+              darkMode
+                ? "bg-white/5 border-white/10"
+                : "bg-gray-100 border-gray-200"
+            }`}
           >
             <FaEnvelope className="text-cyan-400 text-sm" />
-            <span className="text-cyan-300 text-sm font-mono">contact.getInTouch()</span>
+            <span className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Get in Touch</span>
           </motion.div>
 
           <motion.h2
@@ -99,11 +141,11 @@ function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
           >
-            Let's
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">
-              Connect
+            Let's Work
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+              Together
             </span>
           </motion.h2>
 
@@ -112,248 +154,229 @@ function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-gray-400 text-lg max-w-2xl mx-auto font-mono"
+            className={`text-lg ${darkMode ? "text-gray-400" : "text-gray-600"}`}
           >
-            &lt; Have a project in mind? Let's bring your ideas to life /&gt;
+            Have a project in mind? Let's bring your ideas to life
           </motion.p>
         </div>
 
-        {/* Contact Form and Image Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+        {/* Main Content */}
+        <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Side - Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="relative"
+            className={`rounded-2xl border p-8 ${
+              darkMode
+                ? "bg-white/5 border-white/10"
+                : "bg-white border-gray-200 shadow-sm"
+            }`}
           >
-            <div className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-3xl border border-white/10 p-8 hover:border-purple-500/30 transition-all duration-500 h-full">
-              {/* Terminal Header */}
-              <div className="flex items-center gap-2 mb-8 pb-4 border-b border-white/10">
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                </div>
-                <span className="text-xs text-gray-400 font-mono ml-2">contact_form.sh</span>
-                <span className="text-xs text-green-400 font-mono ml-auto">online</span>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Field */}
-                <div className="group">
-                  <label className="block text-sm font-mono text-gray-400 mb-2 group-focus-within:text-cyan-400 transition-colors">
-                    <span className="text-green-400">$&gt;</span> name
-                  </label>
-                  <div className="relative">
-                    <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 group-focus-within:text-cyan-400 transition-colors" />
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-black/70 transition-all duration-300"
-                      placeholder="Please fill your name"
-                    />
-                  </div>
-                </div>
-
-                {/* Email Field */}
-                <div className="group">
-                  <label className="block text-sm font-mono text-gray-400 mb-2 group-focus-within:text-cyan-400 transition-colors">
-                    <span className="text-green-400">$&gt;</span> email
-                  </label>
-                  <div className="relative">
-                    <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 group-focus-within:text-cyan-400 transition-colors" />
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-black/70 transition-all duration-300"
-                      placeholder="please provide your mail id"
-                    />
-                  </div>
-                </div>
-
-                {/* Message Field */}
-                <div className="group">
-                  <label className="block text-sm font-mono text-gray-400 mb-2 group-focus-within:text-cyan-400 transition-colors">
-                    <span className="text-green-400">$&gt;</span> message
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
+            <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
+            
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Name Field */}
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${
+                  darkMode ? "text-gray-400" : "text-gray-600"
+                }`}>
+                  Your Name
+                </label>
+                <div className="relative">
+                  <FaUser className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${
+                    darkMode ? "text-gray-500" : "text-gray-400"
+                  }`} />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     required
-                    rows="5"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:bg-black/70 transition-all duration-300 resize-none"
-                    placeholder="Tell me about your project..."
+                    className={`w-full rounded-xl py-3 pl-12 pr-4 transition-all ${
+                      darkMode
+                        ? "bg-black/50 border border-white/10 text-white placeholder-gray-500 focus:border-cyan-500/50 focus:bg-black/70"
+                        : "bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-cyan-400 focus:bg-white"
+                    }`}
+                    placeholder="John Doe"
                   />
                 </div>
+              </div>
 
-                {/* Submit Button */}
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative w-full overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="relative bg-gradient-to-r from-cyan-600/20 to-purple-600/20 border border-cyan-500/30 rounded-xl py-3 px-6 flex items-center justify-center gap-3 group-hover:border-transparent transition-all duration-300">
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span className="font-mono">Sending...</span>
-                      </>
-                    ) : (
-                      <>
-                        <FaPaperPlane className="text-cyan-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                        <span className="font-mono font-medium">Send Message</span>
-                        <FaArrowRight className="text-cyan-400 group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )}
-                  </div>
-                </motion.button>
-
-                {/* Success Message */}
-                {submitStatus === "success" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400"
-                  >
-                    <FaCheckCircle />
-                    <span className="text-sm font-mono">Message sent successfully!</span>
-                  </motion.div>
-                )}
-              </form>
-
-              {/* Social Links */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <p className="text-sm font-mono text-gray-400 mb-4">
-                  <span className="text-green-400">$&gt;</span> find_me_on
-                </p>
-                <div className="flex gap-4">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={index}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ y: -3 }}
-                      className="group relative"
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-lg transition-all duration-300 group-hover:border-cyan-500/50 group-hover:bg-white/10">
-                        <div className={`transition-colors ${social.color}`}>
-                          {social.icon}
-                        </div>
-                      </div>
-                      <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                        {social.label}
-                      </span>
-                    </motion.a>
-                  ))}
+              {/* Email Field */}
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${
+                  darkMode ? "text-gray-400" : "text-gray-600"
+                }`}>
+                  Email Address
+                </label>
+                <div className="relative">
+                  <FaEnvelope className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${
+                    darkMode ? "text-gray-500" : "text-gray-400"
+                  }`} />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className={`w-full rounded-xl py-3 pl-12 pr-4 transition-all ${
+                      darkMode
+                        ? "bg-black/50 border border-white/10 text-white placeholder-gray-500 focus:border-cyan-500/50 focus:bg-black/70"
+                        : "bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-cyan-400 focus:bg-white"
+                    }`}
+                    placeholder="john@example.com"
+                  />
                 </div>
               </div>
-            </div>
+
+              {/* Message Field */}
+              <div>
+                <label className={`block text-sm font-medium mb-2 ${
+                  darkMode ? "text-gray-400" : "text-gray-600"
+                }`}>
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows="5"
+                  className={`w-full rounded-xl py-3 px-4 transition-all resize-none ${
+                    darkMode
+                      ? "bg-black/50 border border-white/10 text-white placeholder-gray-500 focus:border-cyan-500/50 focus:bg-black/70"
+                      : "bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-cyan-400 focus:bg-white"
+                  }`}
+                  placeholder="Tell me about your project..."
+                />
+              </div>
+
+              {/* Submit Button */}
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl py-3 font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/25 text-white"
+              >
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Sending...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-2">
+                    <FaPaperPlane />
+                    <span>Send Message</span>
+                  </div>
+                )}
+              </motion.button>
+
+              {/* Success Message */}
+              {submitStatus === "success" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400"
+                >
+                  <FaCheckCircle />
+                  <span className="text-sm">Message sent successfully!</span>
+                </motion.div>
+              )}
+            </form>
           </motion.div>
 
-          {/* Right Side - Image & Info */}
+          {/* Right Side - Info & Social */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="relative"
+            className="space-y-6"
           >
-            <div className="bg-gradient-to-br from-purple-900/20 to-cyan-900/20 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden hover:border-purple-500/30 transition-all duration-500 h-full">
-              {/* Image Container */}
-              <div className="relative h-64 md:h-80 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
-                  alt="Developer workspace"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/50 to-transparent" />
-                
-                {/* Image Overlay Text */}
-                <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1">
-                  <code className="text-xs text-cyan-400">dev_workspace.png</code>
-                </div>
+            {/* Info Cards */}
+            <div className={`rounded-2xl border p-8 ${
+              darkMode
+                ? "bg-white/5 border-white/10"
+                : "bg-white border-gray-200 shadow-sm"
+            }`}>
+              <h3 className="text-2xl font-bold mb-6">Let's Connect</h3>
+              <p className={`leading-relaxed mb-6 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+                I'm always excited to collaborate on innovative projects and solve challenging problems. 
+                Whether you have a specific project or just want to chat, I'd love to hear from you.
+              </p>
+              
+              <div className="space-y-4">
+                {infoCards.map((card, idx) => (
+                  <div key={idx} className={`flex items-center gap-3 p-3 rounded-xl border ${
+                    darkMode
+                      ? "bg-white/5 border-white/10"
+                      : "bg-gray-50 border-gray-200"
+                  }`}>
+                    <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+                      {card.icon}
+                    </div>
+                    <div>
+                      <p className={`text-xs ${darkMode ? "text-gray-500" : "text-gray-500"}`}>{card.label}</p>
+                      <p className={`text-sm font-medium ${darkMode ? "text-white" : "text-gray-900"}`}>{card.value}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              {/* Content */}
-              <div className="p-8">
-                <div className="flex items-center gap-2 mb-6">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-sm font-mono text-green-400">status: available_for_work</span>
-                </div>
+            {/* Social Links */}
+            <div className={`rounded-2xl border p-8 ${
+              darkMode
+                ? "bg-white/5 border-white/10"
+                : "bg-white border-gray-200 shadow-sm"
+            }`}>
+              <h3 className="text-xl font-bold mb-4">Find Me On</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ y: -2 }}
+                    className={`flex items-center gap-3 p-3 rounded-xl border transition-all group ${
+                      darkMode
+                        ? "bg-white/5 border-white/10 hover:border-cyan-500/30"
+                        : "bg-gray-50 border-gray-200 hover:border-cyan-400/50"
+                    }`}
+                  >
+                    <div className="text-xl" style={{ color: social.color }}>
+                      {social.icon}
+                    </div>
+                    <span className={`text-sm transition-colors ${
+                      darkMode
+                        ? "text-gray-300 group-hover:text-white"
+                        : "text-gray-600 group-hover:text-gray-900"
+                    }`}>
+                      {social.label}
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+            </div>
 
-                <h3 className="text-2xl font-bold mb-4">
-                  Let's Build Something
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
-                    Amazing Together
-                  </span>
-                </h3>
-
-                <p className="text-gray-400 leading-relaxed mb-6">
-                  I'm always excited to collaborate on innovative projects, 
-                  solve challenging problems, and create impactful digital experiences. 
-                  Whether you have a specific project in mind or just want to chat, 
-                  I'd love to hear from you.
-                </p>
-
-                {/* Quick Response Time */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
-                    <span className="text-sm font-mono text-gray-400">Response Time</span>
-                    <span className="text-sm font-mono text-cyan-400">&lt; 24 hours</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
-                    <span className="text-sm font-mono text-gray-400">Available For</span>
-                    <span className="text-sm font-mono text-cyan-400">Freelance & Full-Time</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
-                    <span className="text-sm font-mono text-gray-400">Location</span>
-                    <span className="text-sm font-mono text-cyan-400">Remote / Worldwide</span>
-                  </div>
-                </div>
-
-                {/* Code-like Footer */}
-                <div className="mt-6 pt-4 border-t border-white/10">
-                  <div className="flex items-center gap-2 text-xs font-mono">
-                    <span className="text-green-400">$&gt;</span>
-                    <span className="text-gray-500">await contact.send()</span>
-                    <span className="text-gray-500">→</span>
-                    <span className="text-cyan-400 animate-pulse">ready</span>
-                  </div>
-                </div>
+            {/* Availability Badge */}
+            <div className={`rounded-2xl border p-4 text-center ${
+              darkMode
+                ? "bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-cyan-500/20"
+                : "bg-gradient-to-r from-cyan-100 to-purple-100 border-cyan-200"
+            }`}>
+              <div className="flex items-center justify-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-700"}`}>Available for work</span>
+                <FaArrowRight className={`text-sm ${darkMode ? "text-cyan-400" : "text-cyan-600"}`} />
               </div>
             </div>
           </motion.div>
         </div>
-
-        {/* Floating Code Decoration */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="absolute -bottom-10 -left-20 opacity-10 pointer-events-none hidden xl:block"
-        >
-          <div className="font-mono text-xs space-y-1">
-            <div className="text-gray-500">{`{`}</div>
-            <div className="ml-2 text-cyan-400">"status": "open",</div>
-            <div className="ml-2 text-purple-400">"collaboration": true,</div>
-            <div className="ml-2 text-pink-400">"response_time": "&lt;24h"</div>
-            <div className="text-gray-500">{`}`}</div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

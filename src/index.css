@@ -4,18 +4,50 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-html{
+/* Light mode variables */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --border-color: #e5e7eb;
+  --card-bg: #ffffff;
+}
+
+/* Dark mode variables */
+.dark {
+  --bg-primary: #0F0F0F;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --border-color: #374151;
+  --card-bg: #1f1f1f;
+}
+
+/* Smooth transition */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}
+
+html {
   scroll-behavior: smooth;
   scroll-padding-top: 0;
 }
 
-body{
+body {
   background-color: #0F0F0F;
   color: #ffffff;
   font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ========== ADD THESE NEW STYLES ========== */
+/* Light mode body styles */
+body:not(.dark) {
+  background-color: #f5f5f5;
+  color: #111827;
+}
+
+/* ========== EXISTING STYLES (keep everything below) ========== */
 
 /* Fix for navbar not blocking content */
 section {
@@ -31,9 +63,7 @@ section {
 /* Ensure proper z-index stacking */
 nav {
   z-index: 1000;
-    transition: all 0.4s ease-in-out;
-
-
+  transition: all 0.4s ease-in-out;
 }
 
 /* Hero section should start from top */
@@ -52,8 +82,7 @@ body.menu-open {
   transition: all 0.3s ease-in-out;
 }
 
-/* ========== EXISTING STYLES BELOW ========== */
-
+/* Keep all your existing animations below */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -103,7 +132,6 @@ body.menu-open {
   color: transparent;
   -webkit-text-stroke: 2px #00ffd5;
 }
-
 
 /* Fade + Slide Up */
 @keyframes fadeUp {
@@ -159,7 +187,6 @@ body.menu-open {
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
-
 
 /* Floating icon animation */
 @keyframes float {
@@ -219,7 +246,6 @@ body.menu-open {
   }
 }
 
-
 /* FLOAT ICON */
 @keyframes float {
   0% { transform: translateY(0px); }
@@ -252,7 +278,6 @@ body.menu-open {
   70% { transform: translateX(260px); opacity: 1; }
   100% { transform: translateX(320px); opacity: 0; }
 }
-
 
 /* Horizontal floating code animations */
 @keyframes floatCode {
@@ -320,6 +345,36 @@ html {
   background: rgba(0, 0, 0, 0.7);
 }
 
+/* Light mode navbar */
+body:not(.dark) .navbar-blur {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Prevent white flash during theme transition */
+html {
+  background-color: #0F0F0F;
+}
+
+html.light {
+  background-color: #f5f5f5;
+}
+
+/* Smooth theme transition for all elements */
+* {
+  transition: background-color 0.2s ease-in-out, 
+              border-color 0.2s ease-in-out,
+              color 0.2s ease-in-out;
+}
+
+/* But exclude transitions for elements that might cause flash */
+.no-transition {
+  transition: none !important;
+}
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0F0F0F; }
 ::-webkit-scrollbar-thumb { background: #7C3AED; border-radius: 3px; }
+
+/* Light mode scrollbar */
+body:not(.dark) ::-webkit-scrollbar-track { background: #f0f0f0; }
+body:not(.dark) ::-webkit-scrollbar-thumb { background: #7C3AED; }
