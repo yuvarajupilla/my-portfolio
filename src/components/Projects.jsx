@@ -283,14 +283,14 @@ function Projects() {
         </div>
       </div>
 
-      {/* Website Preview Popup - Professional Version */}
+      {/* Website Preview Popup - Mobile Responsive Fixed */}
       <AnimatePresence>
         {isPopupOpen && selectedProject && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-md"
             onClick={closePopup}
           >
             <motion.div
@@ -298,59 +298,63 @@ function Projects() {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.85, opacity: 0, y: 30 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className={`relative w-[90vw] h-[85vh] rounded-2xl overflow-hidden border shadow-2xl ${
+              className={`relative w-full sm:w-[90vw] h-[95vh] sm:h-[85vh] rounded-xl sm:rounded-2xl overflow-hidden border shadow-2xl ${
                 darkMode
                   ? "bg-[#0A0A0F] border-violet-500/30"
                   : "bg-white border-violet-300/50"
               }`}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Popup Header */}
-              <div className={`absolute top-0 left-0 right-0 backdrop-blur-xl border-b z-10 ${
+              {/* Popup Header - Fixed positioning for mobile */}
+              <div className={`absolute top-0 left-0 right-0 backdrop-blur-xl border-b z-20 ${
                 darkMode
                   ? "bg-gradient-to-r from-violet-900/95 to-purple-900/95 border-violet-500/30"
                   : "bg-gradient-to-r from-violet-100 to-purple-100 border-violet-200"
               }`}>
-                <div className="flex items-center justify-between px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="text-2xl text-violet-400">
+                <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
+                  <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                    <div className="text-xl sm:text-2xl text-violet-400 shrink-0">
                       {selectedProject.icon}
                     </div>
-                    <div>
-                      <h3 className={`font-bold ${darkMode ? "text-white" : "text-gray-900"}`}>{selectedProject.title}</h3>
-                      <p className={`text-xs font-mono ${darkMode ? "text-gray-400" : "text-gray-500"}`}>{selectedProject.liveUrl}</p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className={`font-bold text-sm sm:text-base truncate ${darkMode ? "text-white" : "text-gray-900"}`}>
+                        {selectedProject.title}
+                      </h3>
+                      <p className={`text-[10px] sm:text-xs font-mono truncate ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+                        {selectedProject.liveUrl}
+                      </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <a
                       href={selectedProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`p-2 rounded-lg transition-colors ${
+                      className={`p-1.5 sm:p-2 rounded-lg transition-colors ${
                         darkMode
                           ? "bg-white/10 hover:bg-violet-500"
                           : "bg-gray-100 hover:bg-violet-500 hover:text-white"
                       }`}
                       title="Open in new tab"
                     >
-                      <FaExpand className="text-sm" />
+                      <FaExpand className="text-xs sm:text-sm" />
                     </a>
                     <button
                       onClick={closePopup}
-                      className={`p-2 rounded-lg transition-colors ${
+                      className={`p-1.5 sm:p-2 rounded-lg transition-colors ${
                         darkMode
                           ? "bg-white/10 hover:bg-red-500"
                           : "bg-gray-100 hover:bg-red-500 hover:text-white"
                       }`}
                     >
-                      <FaTimes className="text-sm" />
+                      <FaTimes className="text-xs sm:text-sm" />
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Website Iframe */}
-              <div className="absolute inset-0 pt-[70px]">
+              {/* Website Iframe - Adjusted for mobile header */}
+              <div className="absolute inset-0 pt-[60px] sm:pt-[70px]">
                 <iframe
                   src={selectedProject.liveUrl}
                   title={selectedProject.title}
@@ -366,9 +370,14 @@ function Projects() {
               </div>
 
               {/* Bottom Gradient (Clean) */}
-              <div className={`absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t pointer-events-none ${
+              <div className={`absolute bottom-0 left-0 right-0 h-8 sm:h-12 bg-gradient-to-t pointer-events-none ${
                 darkMode ? "from-black/50 to-transparent" : "from-gray-200/50 to-transparent"
               }`}></div>
+
+              {/* Mobile Swipe Indicator */}
+              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 sm:hidden">
+                <div className="w-10 h-1 bg-gray-500/50 rounded-full"></div>
+              </div>
             </motion.div>
           </motion.div>
         )}
@@ -386,6 +395,11 @@ function Projects() {
         }
         .animate-scan {
           animation: scan 6s linear infinite;
+        }
+
+        /* Prevent body scroll when popup is open */
+        body.no-scroll {
+          overflow: hidden;
         }
       `}</style>
     </section>

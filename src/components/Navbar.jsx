@@ -216,7 +216,7 @@ function Navbar() {
       {/* ✅ RESUME BUTTON (ADDED ONLY) */}
       <div className="mt-4">
         <a
-          href="/resume.pdf"
+          href="/yuvaraju_pilla_resume.pdf"
           download
           className={`flex items-center justify-center gap-2 w-full px-6 py-3 border rounded-xl ${
             darkMode 

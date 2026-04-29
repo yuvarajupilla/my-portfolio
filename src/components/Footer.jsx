@@ -207,14 +207,14 @@ function Footer() {
             <div className="space-y-3">
               <div className="flex items-center justify-center md:justify-start gap-3 text-sm">
                 <FaEnvelope className="text-violet-500" />
-                <a href="mailto:yuvaraju@example.com" className="hover:text-violet-500 transition-colors">
-                  yuvaraju@example.com
+                <a href="mailto:yuvarajupilla1@gmail.com" className="hover:text-violet-500 transition-colors">
+                  yuvarajupilla1@gmail.com
                 </a>
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3 text-sm">
                 <FaPhone className="text-violet-500" />
-                <a href="tel:+919999999999" className="hover:text-violet-500 transition-colors">
-                  +91 99999 99999
+                <a href="tel:+919885988059" className="hover:text-violet-500 transition-colors">
+                  +91 98859 88059
                 </a>
               </div>
               <div className="flex items-center justify-center md:justify-start gap-3 text-sm">
