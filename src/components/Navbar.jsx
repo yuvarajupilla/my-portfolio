@@ -114,7 +114,7 @@ function Navbar() {
 
             {/* 📄 DOWNLOAD RESUME */}
             <a
-              href="/resume.pdf"
+              href="/yuvaraju_pilla_resume.pdf"
               download
               className="px-5 py-2 rounded-full text-sm font-medium border border-violet-400 text-white hover:bg-violet-500 hover:scale-105 transition-all duration-300"
             >

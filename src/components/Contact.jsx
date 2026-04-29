@@ -1,19 +1,21 @@
+import emailjs from "@emailjs/browser";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
 import { 
   FaEnvelope, 
   FaGithub, 
   FaLinkedin, 
-  FaInstagram,   // ✅ add here
+  FaInstagram,
   FaUser,
   FaPaperPlane,
   FaCheckCircle,
+  FaTimesCircle,
   FaArrowRight,
   FaMapMarkerAlt,
   FaClock,
   FaBriefcase
 } from "react-icons/fa";
-
 
 import { SiLeetcode } from "react-icons/si";
 import { useTheme } from "../context/ThemeContext";
@@ -28,34 +30,12 @@ function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
-
-
-const socialLinks = [
-  { 
-    icon: <FaGithub />, 
-    url: "https://github.com/yuvarajupilla", 
-    label: "GitHub", 
-    color: "#333" 
-  },
-  { 
-    icon: <FaLinkedin />, 
-    url: "https://www.linkedin.com/in/yuvarajupilla/", 
-    label: "LinkedIn", 
-    color: "#0077B5" 
-  },
-  { 
-    icon: <FaInstagram />, 
-    url: "https://www.instagram.com/yuvaraju___p", 
-    label: "Instagram", 
-    color: "#E1306C" 
-  },
-  { 
-    icon: <SiLeetcode />, 
-    url: "https://leetcode.com/u/yuvadeveloper112002/", 
-    label: "LeetCode", 
-    color: "#FFA116" 
-  }
-];
+  const socialLinks = [
+    { icon: <FaGithub />, url: "https://github.com/yuvarajupilla", label: "GitHub", color: "#333" },
+    { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/yuvarajupilla/", label: "LinkedIn", color: "#0077B5" },
+    { icon: <FaInstagram />, url: "https://www.instagram.com/yuvaraju___p", label: "Instagram", color: "#E1306C" },
+    { icon: <SiLeetcode />, url: "https://leetcode.com/u/yuvadeveloper112002/", label: "LeetCode", color: "#FFA116" }
+  ];
 
   const infoCards = [
     { icon: <FaMapMarkerAlt />, label: "Location", value: "Vijayawada, India" },
@@ -64,28 +44,43 @@ const socialLinks = [
   ];
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    setTimeout(() => {
+    setSubmitStatus(null);
+
+    try {
+      await emailjs.send(
+        "service_y141v3w",
+        "template_bzmjbds",
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          time: new Date().toLocaleString(),
+        },
+        "F-YGZyjWazmUvJPV1"
+      );
+
       setSubmitStatus("success");
-      setIsSubmitting(false);
       setFormData({ name: "", email: "", message: "" });
-      setTimeout(() => setSubmitStatus(null), 3000);
-    }, 1500);
+    } catch (error) {
+      console.error("Failed to send:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 4000);
+    }
   };
 
   return (
     <section className={`relative overflow-hidden transition-colors duration-300 ${
       darkMode ? "bg-[#0A0A0F] text-white" : "bg-gray-50 text-gray-900"
     } py-24 px-6 md:px-16`}>
+
       {/* Background Animation */}
       <div className={`absolute inset-0 overflow-hidden pointer-events-none ${
         darkMode ? "opacity-[0.02]" : "opacity-[0.01]"
@@ -95,18 +90,9 @@ const socialLinks = [
             <motion.div
               key={i}
               className="absolute whitespace-pre"
-              style={{
-                left: `${i * 35}%`,
-                top: 0,
-              }}
-              animate={{
-                y: ["-100%", "100%"],
-              }}
-              transition={{
-                duration: 25 + i * 10,
-                repeat: Infinity,
-                ease: "linear",
-              }}
+              style={{ left: `${i * 35}%`, top: 0 }}
+              animate={{ y: ["-100%", "100%"] }}
+              transition={{ duration: 25 + i * 10, repeat: Infinity, ease: "linear" }}
             >
               {[...Array(20)].map((_, j) => (
                 <div key={j} className={`py-1 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
@@ -127,9 +113,7 @@ const socialLinks = [
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border mb-6 ${
-              darkMode
-                ? "bg-white/5 border-white/10"
-                : "bg-gray-100 border-gray-200"
+              darkMode ? "bg-white/5 border-white/10" : "bg-gray-100 border-gray-200"
             }`}
           >
             <FaEnvelope className="text-cyan-400 text-sm" />
@@ -169,73 +153,61 @@ const socialLinks = [
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             className={`rounded-2xl border p-8 ${
-              darkMode
-                ? "bg-white/5 border-white/10"
-                : "bg-white border-gray-200 shadow-sm"
+              darkMode ? "bg-white/5 border-white/10" : "bg-white border-gray-200 shadow-sm"
             }`}
           >
             <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Name Field */}
               <div>
-                <label className={`block text-sm font-medium mb-2 ${
-                  darkMode ? "text-gray-400" : "text-gray-600"
-                }`}>
+                <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
                   Your Name
                 </label>
                 <div className="relative">
-                  <FaUser className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${
-                    darkMode ? "text-gray-500" : "text-gray-400"
-                  }`} />
+                  <FaUser className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${darkMode ? "text-gray-500" : "text-gray-400"}`} />
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className={`w-full rounded-xl py-3 pl-12 pr-4 transition-all ${
+                    className={`w-full rounded-xl py-3 pl-12 pr-4 transition-all outline-none ${
                       darkMode
                         ? "bg-black/50 border border-white/10 text-white placeholder-gray-500 focus:border-cyan-500/50 focus:bg-black/70"
                         : "bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-cyan-400 focus:bg-white"
                     }`}
-                    placeholder="John Doe"
+                    placeholder="Your Name"
                   />
                 </div>
               </div>
 
               {/* Email Field */}
               <div>
-                <label className={`block text-sm font-medium mb-2 ${
-                  darkMode ? "text-gray-400" : "text-gray-600"
-                }`}>
+                <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
                   Email Address
                 </label>
                 <div className="relative">
-                  <FaEnvelope className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${
-                    darkMode ? "text-gray-500" : "text-gray-400"
-                  }`} />
+                  <FaEnvelope className={`absolute left-4 top-1/2 transform -translate-y-1/2 ${darkMode ? "text-gray-500" : "text-gray-400"}`} />
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className={`w-full rounded-xl py-3 pl-12 pr-4 transition-all ${
+                    className={`w-full rounded-xl py-3 pl-12 pr-4 transition-all outline-none ${
                       darkMode
                         ? "bg-black/50 border border-white/10 text-white placeholder-gray-500 focus:border-cyan-500/50 focus:bg-black/70"
                         : "bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-cyan-400 focus:bg-white"
                     }`}
-                    placeholder="john@example.com"
+                    placeholder="yourmail@example.com"
                   />
                 </div>
               </div>
 
               {/* Message Field */}
               <div>
-                <label className={`block text-sm font-medium mb-2 ${
-                  darkMode ? "text-gray-400" : "text-gray-600"
-                }`}>
+                <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
                   Message
                 </label>
                 <textarea
@@ -244,7 +216,7 @@ const socialLinks = [
                   onChange={handleChange}
                   required
                   rows="5"
-                  className={`w-full rounded-xl py-3 px-4 transition-all resize-none ${
+                  className={`w-full rounded-xl py-3 px-4 transition-all resize-none outline-none ${
                     darkMode
                       ? "bg-black/50 border border-white/10 text-white placeholder-gray-500 focus:border-cyan-500/50 focus:bg-black/70"
                       : "bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:border-cyan-400 focus:bg-white"
@@ -257,34 +229,118 @@ const socialLinks = [
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl py-3 font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/25 text-white"
+                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.97 }}
+                className={`relative w-full rounded-xl py-3 font-semibold transition-all overflow-hidden text-white ${
+                  submitStatus === "success"
+                    ? "bg-gradient-to-r from-green-500 to-emerald-500 shadow-lg shadow-green-500/25"
+                    : submitStatus === "error"
+                    ? "bg-gradient-to-r from-red-500 to-rose-500 shadow-lg shadow-red-500/25"
+                    : "bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/25"
+                }`}
               >
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Sending...</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-2">
-                    <FaPaperPlane />
-                    <span>Send Message</span>
-                  </div>
-                )}
+                <AnimatePresence mode="wait">
+                  {isSubmitting ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>Sending...</span>
+                    </motion.div>
+                  ) : submitStatus === "success" ? (
+                    <motion.div
+                      key="success"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <FaCheckCircle />
+                      <span>Message Sent!</span>
+                    </motion.div>
+                  ) : submitStatus === "error" ? (
+                    <motion.div
+                      key="error"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <FaTimesCircle />
+                      <span>Failed. Try Again</span>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="idle"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <FaPaperPlane />
+                      <span>Send Message</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.button>
 
-              {/* Success Message */}
-              {submitStatus === "success" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 p-3 rounded-lg bg-green-500/10 border border-green-500/30 text-green-400"
-                >
-                  <FaCheckCircle />
-                  <span className="text-sm">Message sent successfully!</span>
-                </motion.div>
-              )}
+              {/* Status Toast */}
+              <AnimatePresence>
+                {submitStatus === "success" && (
+                  <motion.div
+                    key="success-toast"
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex items-center gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400"
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
+                    >
+                      <FaCheckCircle className="text-lg shrink-0" />
+                    </motion.div>
+                    <div>
+                      <p className="text-sm font-semibold">Message sent successfully!</p>
+                      <p className="text-xs text-green-500/70">I'll get back to you within 24 hours.</p>
+                    </div>
+                  </motion.div>
+                )}
+
+                {submitStatus === "error" && (
+                  <motion.div
+                    key="error-toast"
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex items-center gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400"
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
+                    >
+                      <FaTimesCircle className="text-lg shrink-0" />
+                    </motion.div>
+                    <div>
+                      <p className="text-sm font-semibold">Something went wrong!</p>
+                      <p className="text-xs text-red-500/70">Please try again or contact me directly.</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
             </form>
           </motion.div>
 
@@ -298,28 +354,24 @@ const socialLinks = [
           >
             {/* Info Cards */}
             <div className={`rounded-2xl border p-8 ${
-              darkMode
-                ? "bg-white/5 border-white/10"
-                : "bg-white border-gray-200 shadow-sm"
+              darkMode ? "bg-white/5 border-white/10" : "bg-white border-gray-200 shadow-sm"
             }`}>
               <h3 className="text-2xl font-bold mb-6">Let's Connect</h3>
               <p className={`leading-relaxed mb-6 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-                I'm always excited to collaborate on innovative projects and solve challenging problems. 
+                I'm always excited to collaborate on innovative projects and solve challenging problems.
                 Whether you have a specific project or just want to chat, I'd love to hear from you.
               </p>
-              
+
               <div className="space-y-4">
                 {infoCards.map((card, idx) => (
                   <div key={idx} className={`flex items-center gap-3 p-3 rounded-xl border ${
-                    darkMode
-                      ? "bg-white/5 border-white/10"
-                      : "bg-gray-50 border-gray-200"
+                    darkMode ? "bg-white/5 border-white/10" : "bg-gray-50 border-gray-200"
                   }`}>
                     <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400">
                       {card.icon}
                     </div>
                     <div>
-                      <p className={`text-xs ${darkMode ? "text-gray-500" : "text-gray-500"}`}>{card.label}</p>
+                      <p className="text-xs text-gray-500">{card.label}</p>
                       <p className={`text-sm font-medium ${darkMode ? "text-white" : "text-gray-900"}`}>{card.value}</p>
                     </div>
                   </div>
@@ -329,9 +381,7 @@ const socialLinks = [
 
             {/* Social Links */}
             <div className={`rounded-2xl border p-8 ${
-              darkMode
-                ? "bg-white/5 border-white/10"
-                : "bg-white border-gray-200 shadow-sm"
+              darkMode ? "bg-white/5 border-white/10" : "bg-white border-gray-200 shadow-sm"
             }`}>
               <h3 className="text-xl font-bold mb-4">Find Me On</h3>
               <div className="grid grid-cols-2 gap-3">
@@ -348,13 +398,9 @@ const socialLinks = [
                         : "bg-gray-50 border-gray-200 hover:border-cyan-400/50"
                     }`}
                   >
-                    <div className="text-xl" style={{ color: social.color }}>
-                      {social.icon}
-                    </div>
+                    <div className="text-xl" style={{ color: social.color }}>{social.icon}</div>
                     <span className={`text-sm transition-colors ${
-                      darkMode
-                        ? "text-gray-300 group-hover:text-white"
-                        : "text-gray-600 group-hover:text-gray-900"
+                      darkMode ? "text-gray-300 group-hover:text-white" : "text-gray-600 group-hover:text-gray-900"
                     }`}>
                       {social.label}
                     </span>

@@ -25,6 +25,17 @@ function AITechStack() {
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
   const [imageErrors, setImageErrors] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const aiTools = [
     {
@@ -41,6 +52,7 @@ function AITechStack() {
         "API integration capabilities"
       ],
       prompt: "Explain how to optimize React component re-renders",
+      response: "💡 React components re-render when state or props change. To optimize: use memo(), useCallback(), and avoid inline functions in JSX. This reduces unnecessary re-renders and improves performance.",
       color: "#10B981",
       bgColor: "bg-emerald-500/10",
       borderColor: "border-emerald-500/30",
@@ -60,6 +72,7 @@ function AITechStack() {
         "Multi-language support"
       ],
       prompt: "Write an efficient algorithm for binary tree traversal",
+      response: "💡 def inorder_traversal(root):\n    return inorder_traversal(root.left) + [root.val] + inorder_traversal(root.right) if root else []\n\nTime Complexity: O(n) | Space Complexity: O(h)",
       color: "#06B6D4",
       bgColor: "bg-cyan-500/10",
       borderColor: "border-cyan-500/30",
@@ -79,6 +92,7 @@ function AITechStack() {
         "Fact verification system"
       ],
       prompt: "Find latest trends in full-stack development 2024",
+      response: "💡 According to recent data, top full-stack trends for 2024:\n• Serverless architecture adoption +45%\n• Edge computing implementation +38%\n• WebAssembly integration +42%",
       color: "#A855F7",
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/30",
@@ -98,6 +112,7 @@ function AITechStack() {
         "Document analysis"
       ],
       prompt: "Analyze this code for security vulnerabilities",
+      response: "💡 Security Analysis Complete:\n✓ Found 2 medium-risk vulnerabilities\n→ SQL injection risk in user input\n→ XSS vulnerability in comment section\n✓ Recommended fixes provided",
       color: "#F97316",
       bgColor: "bg-orange-500/10",
       borderColor: "border-orange-500/30",
@@ -105,8 +120,15 @@ function AITechStack() {
     }
   ];
 
-  // Typing animation effect
+  // Typing animation effect (only for desktop)
   useEffect(() => {
+    if (isMobile) {
+      // On mobile, just show full prompt without animation
+      setTypedText(aiTools[activeAI].prompt);
+      setIsTyping(false);
+      return;
+    }
+
     let currentIndex = 0;
     const currentPrompt = aiTools[activeAI].prompt;
     
@@ -132,7 +154,7 @@ function AITechStack() {
     }, 50);
     
     return () => clearInterval(interval);
-  }, [activeAI]);
+  }, [activeAI, isMobile]);
 
   const handleImageError = (toolName) => {
     setImageErrors(prev => ({ ...prev, [toolName]: true }));
@@ -322,20 +344,22 @@ function AITechStack() {
                       </span>
                     </div>
 
-                    {/* Terminal Content */}
-                    <div className="p-4 font-mono text-xs">
+                    {/* Terminal Content - Fixed height for consistent layout */}
+                    <div className="p-4 font-mono text-xs min-h-[280px]">
                       <div className="flex items-start gap-2 mb-3">
                         <span className="text-green-400">$</span>
                         <span className="text-cyan-400">prompt</span>
                         <span className="text-gray-500">"</span>
-                        <span className={darkMode ? "text-white" : "text-gray-900"}>{typedText}</span>
-                        {isTyping && (
+                        <span className={darkMode ? "text-white" : "text-gray-900"}>
+                          {isMobile ? aiTools[activeAI].prompt : typedText}
+                        </span>
+                        {!isMobile && isTyping && (
                           <span className="w-1.5 h-3.5 bg-cyan-400 animate-pulse ml-0.5" />
                         )}
                         <span className="text-gray-500">"</span>
                       </div>
 
-                      {!isTyping && (
+                      {(!isMobile ? !isTyping : true) && (
                         <motion.div
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
@@ -353,10 +377,7 @@ function AITechStack() {
                               <div className={`text-[11px] leading-relaxed whitespace-pre-wrap ${
                                 darkMode ? "text-gray-400" : "text-gray-600"
                               }`}>
-                                {activeAI === 0 && "💡 React components re-render when state or props change. To optimize: use memo(), useCallback(), and avoid inline functions in JSX. This reduces unnecessary re-renders and improves performance."}
-                                {activeAI === 1 && "💡 def inorder_traversal(root):\n    return inorder_traversal(root.left) + [root.val] + inorder_traversal(root.right) if root else []\n\nTime Complexity: O(n) | Space Complexity: O(h)"}
-                                {activeAI === 2 && "💡 According to recent data, top full-stack trends for 2024:\n• Serverless architecture adoption +45%\n• Edge computing implementation +38%\n• WebAssembly integration +42%"}
-                                {activeAI === 3 && "💡 Security Analysis Complete:\n✓ Found 2 medium-risk vulnerabilities\n→ SQL injection risk in user input\n→ XSS vulnerability in comment section\n✓ Recommended fixes provided"}
+                                {aiTools[activeAI].response}
                               </div>
                             </div>
                           </div>

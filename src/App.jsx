@@ -8,6 +8,7 @@ import Services from "./components/Services";
 import Aitools from "./components/Aitools";
 import StudyTimeline from "./components/StudyTimeline";
 import Contact from "./components/Contact";
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -45,6 +46,8 @@ function App() {
       <section id="contact">
         <Contact />
       </section>
+
+     <Footer/>
     </ThemeProvider>
   );
 }
