@@ -95,7 +95,7 @@ function Navbar() {
           </ul>
 
           {/* RIGHT SIDE */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="relative hidden md:flex items-center gap-4">
             <ThemeToggle />
 
             {/* ⭐ START PROJECT (RESTORED) */}
@@ -123,7 +123,7 @@ function Navbar() {
           </div>
 
           {/* MOBILE */}
-          <div className="flex md:hidden items-center gap-3">
+          <div className="relative flex md:hidden items-center gap-3">
             <ThemeToggle />
 
             <button

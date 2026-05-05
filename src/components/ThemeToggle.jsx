@@ -6,6 +6,7 @@ function ThemeToggle() {
   const { darkMode, toggleTheme } = useTheme();
 
   return (
+    <div className="relative">
     <motion.button
       onClick={toggleTheme}
       className="relative w-10 h-10 rounded-full bg-gray-200 dark:bg-white/10 backdrop-blur-sm border border-gray-300 dark:border-white/20 hover:border-cyan-500/50 transition-all duration-300 flex items-center justify-center overflow-hidden"
@@ -36,6 +37,7 @@ function ThemeToggle() {
         <FaSun className="text-yellow-500 text-lg" />
       </motion.div>
     </motion.button>
+</div>
   );
 }
 
