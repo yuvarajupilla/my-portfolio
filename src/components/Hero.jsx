@@ -64,7 +64,7 @@ function Hero() {
         </span>
 
         <h1 className="hero-heading anim-item" style={{ animationDelay: "0.26s" }}>
-          Frontend<br />
+          Full Stack<br />
           Developer<br />
           building{" "}
           <em className="hero-accent">fast,<br className="mobile-br" /> scalable</em>
@@ -72,8 +72,8 @@ function Hero() {
         </h1>
 
         <p className="hero-desc anim-item" style={{ animationDelay: "0.44s" }}>
-          Crafting responsive, high-performance web experiences
-          with React.js and modern technologies.
+          Crafting scalable, high-performance full-stack applications
+with modern frontend and backend technologies.
         </p>
 
         <div className="feat-row anim-item" style={{ animationDelay: "0.58s" }}>

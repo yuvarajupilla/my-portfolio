@@ -36,75 +36,81 @@ function Services() {
   // 🔥 Parallax background effect
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
-  const services = [
-    {
-      title: "Full Stack Development",
-      desc: "Building complete web applications with responsive frontend architecture and scalable backend systems. End-to-end solutions from database to UI.",
-      longDesc: "From concept to deployment, I build modern web applications using React, Node.js, and MongoDB. Focus on performance, SEO, and user experience.",
-      icon: <FaCode />,
-      gradient: "from-violet-600/40 to-fuchsia-500/20",
-      borderGradient: "from-violet-500 to-fuchsia-500",
-      tech: [
-        { icon: <FaReact color="#61DBFB" />, name: "React" },
-        { icon: <FaNodeJs color="#68A063" />, name: "Node.js" },
-        { icon: <SiMongodb color="#4DB33D" />, name: "MongoDB" },
-        { icon: <SiExpress color="#ffffff" />, name: "Express" },
-      ],
-      metrics: [
-        { label: "Projects Delivered", value: "2+" },
-        { label: "Happy Clients", value: "5+" },
-      ],
-    },
-    {
-      title: "Java Spring Framework",
-      desc: "Robust REST APIs, authentication systems, microservices, and enterprise-grade backend development with Spring Boot.",
-      longDesc: "Enterprise-level backend solutions with Spring Boot, Spring Security, Hibernate, and microservices architecture. Scalable and secure.",
-      icon: <SiSpringboot />,
-      gradient: "from-emerald-600/40 to-teal-500/20",
-      borderGradient: "from-emerald-500 to-teal-500",
-      tech: [
-        { icon: <SiSpringboot color="#6DB33F" />, name: "Spring Boot" },
-        { icon: <SiMysql color="#00758F" />, name: "MySQL" },
-        { icon: <FaShieldAlt className="text-amber-400" />, name: "Security" },
-      ],
-      metrics: [
-        { label: "APIs Built", value: "18+" },
-        { label: "Microservices", value: "10+" },
-      ],
-    },
-    {
-      title: "WordPress Development",
-      desc: "Custom WordPress themes, dynamic CMS integration, and performance-optimized websites.",
-      longDesc: "Custom WordPress solutions including theme development, plugin customization, WooCommerce stores, and performance optimization.",
-      icon: <FaWordpress />,
-      gradient: "from-sky-600/40 to-cyan-500/20",
-      borderGradient: "from-sky-500 to-cyan-500",
-      tech: [
-        { icon: <FaWordpress color="#21759B" />, name: "WordPress" },
-        { icon: <SiTailwindcss color="#06B6D4" />, name: "Tailwind" },
-      ],
-      metrics: [
-        { label: "Websites", value: "15+" },
-        { label: "Custom Themes", value: "8+" },
-      ],
-    },
-    {
-      title: "UI / UX & Canva Design",
-      desc: "Clean visual systems, user-focused interfaces, and branding assets for modern products.",
-      longDesc: "Beautiful, intuitive interfaces with focus on user experience. From wireframes to high-fidelity prototypes using modern design tools.",
-      icon: <SiCanva />,
-      gradient: "from-pink-600/40 to-rose-500/20",
-      borderGradient: "from-pink-500 to-rose-500",
-      tech: [
-        { icon: <SiCanva color="#00C4CC" />, name: "Canva" },
-        { icon: "🎨", name: "Figma" },
-      ],
-      metrics: [
-        { label: "Design Projects", value: "30+" },
-        { label: "Happy Brands", value: "25+" },
-      ],
-    },
-  ];
+const services = [
+  {
+    title: "Frontend Development",
+    desc: "Creating responsive, interactive, and high-performance user interfaces with modern frontend technologies.",
+    longDesc:
+      "Building modern web interfaces using React.js, Tailwind CSS, and advanced animations with focus on performance, accessibility, and user experience.",
+    icon: <FaReact />,
+    gradient: "from-cyan-600/40 to-blue-500/20",
+    borderGradient: "from-cyan-500 to-blue-500",
+    tech: [
+      { icon: <FaReact color='#61DBFB' />, name: "React" },
+      { icon: <SiTailwindcss color='#06B6D4' />, name: "Tailwind" },
+    ],
+    metrics: [
+      { label: "UI Projects", value: "10+" },
+      { label: "Responsive Apps", value: "15+" },
+    ],
+  },
+
+  {
+    title: "Backend Development",
+    desc: "Developing scalable APIs, authentication systems, and secure server-side applications.",
+    longDesc:
+      "Backend development using Node.js, Express.js, MongoDB, and Spring Boot with REST APIs, authentication, and database architecture.",
+    icon: <FaNodeJs />,
+    gradient: "from-emerald-600/40 to-green-500/20",
+    borderGradient: "from-emerald-500 to-green-500",
+    tech: [
+      { icon: <FaNodeJs color='#68A063' />, name: "Node.js" },
+      { icon: <SiExpress color='#ffffff' />, name: "Express" },
+      { icon: <SiMongodb color='#4DB33D' />, name: "MongoDB" },
+      { icon: <SiSpringboot color='#6DB33F' />, name: "Spring Boot" },
+    ],
+    metrics: [
+      { label: "APIs Built", value: "20+" },
+      { label: "Databases", value: "10+" },
+    ],
+  },
+
+  {
+    title: "Deployment & DevOps",
+    desc: "Deploying and managing scalable applications with cloud and container technologies.",
+    longDesc:
+      "Application deployment using Docker, cloud hosting platforms, CI/CD workflows, and production optimization for scalable applications.",
+    icon: <FaCloud />,
+    gradient: "from-orange-600/40 to-amber-500/20",
+    borderGradient: "from-orange-500 to-amber-500",
+    tech: [
+      { icon: <SiDocker color='#2496ED' />, name: "Docker" },
+      { icon: <FaRocket className='text-orange-400' />, name: "Deployment" },
+    ],
+    metrics: [
+      { label: "Deployments", value: "12+" },
+      { label: "Cloud Apps", value: "8+" },
+    ],
+  },
+
+  {
+    title: "UI / UX & Canva Design",
+    desc: "Designing modern interfaces, branding assets, and engaging visual experiences.",
+    longDesc:
+      "Creating clean and user-friendly designs, social media assets, presentations, and UI concepts using Canva and Figma.",
+    icon: <SiCanva />,
+    gradient: "from-pink-600/40 to-rose-500/20",
+    borderGradient: "from-pink-500 to-rose-500",
+    tech: [
+      { icon: <SiCanva color='#00C4CC' />, name: "Canva" },
+      { icon: "🎨", name: "Figma" },
+    ],
+    metrics: [
+      { label: "Designs", value: "30+" },
+      { label: "Brand Assets", value: "20+" },
+    ],
+  },
+];
 
   // Animation variants
   const fadeUp = {
